@@ -31,6 +31,8 @@ public class FoundationLatch implements Subsystem {
         this.state = state;
     }
 
+    public double getPosition(){return state.position;}
+
     @Override
     public void initHardware() {
         this.foundationL = hardwareMap.get(Servo.class, "foundationL");

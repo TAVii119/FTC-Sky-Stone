@@ -33,6 +33,8 @@ public class Intake implements Subsystem {
         this.state = state;
     }
 
+    public double getPower(){return state.power;}
+
     @Override
     public void initHardware() {
         this.intakeL = hardwareMap.get(DcMotor.class, "intakeL");
