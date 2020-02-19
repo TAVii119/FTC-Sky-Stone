@@ -31,8 +31,6 @@ public class FoundationLatch implements Subsystem {
         this.state = state;
     }
 
-    public double getPosition(){return state.position;}
-
     @Override
     public void initHardware() {
         this.foundationL = hardwareMap.get(Servo.class, "foundationL");
@@ -44,4 +42,6 @@ public class FoundationLatch implements Subsystem {
         foundationL.setPosition(state.position);
         foundationR.setPosition(state.position);
     }
+
+    public double getPosition(){return state.position;}
 }

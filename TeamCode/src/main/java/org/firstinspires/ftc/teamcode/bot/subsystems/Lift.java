@@ -24,15 +24,26 @@ public class Lift implements Subsystem {
 
     @Override
     public void initHardware() {
-        liftMotorL = hardwareMap.get(DcMotor.class, "liftMotorL");
-        liftMotorR = hardwareMap.get(DcMotor.class, "liftMotorR");
+        this.liftMotorL = hardwareMap.get(DcMotor.class, "liftMotorL");
+        this.liftMotorR = hardwareMap.get(DcMotor.class, "liftMotorR");
 
-        liftMotorR.setDirection(DcMotor.Direction.REVERSE);
+        this.liftMotorR.setDirection(DcMotor.Direction.REVERSE);
+
+        this.liftMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.liftMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.liftMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.liftMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     @Override
     public void periodic() {
         liftMotorL.setPower(leftPower);
         liftMotorR.setPower(rightPower);
+    }
+
+    public int getLiftPosition() {
+        int liftPosition = liftMotorL.getCurrentPosition();
+
+        return liftPosition;
     }
 }

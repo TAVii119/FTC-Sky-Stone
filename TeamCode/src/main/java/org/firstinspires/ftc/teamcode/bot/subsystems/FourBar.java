@@ -9,16 +9,17 @@ public class FourBar implements Subsystem {
 
     private Servo barLeft;
     private Servo barRight;
-    private State state = State.MIDDLE;
+    private State state = State.INTAKE;
 
     public FourBar(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
     }
 
     public enum State {
-        INTAKE(1.0),
-        MIDDLE(0.5),
-        SPIT_OUT(0);
+        WAIT(0.2),
+        INTAKE(0.0),
+        SCORE1(0.5),
+        SCORE2(1.0);
 
         private final double position;
 
@@ -43,5 +44,9 @@ public class FourBar implements Subsystem {
     public void periodic() {
         barLeft.setPosition(state.position);
         barRight.setPosition(state.position);
+    }
+
+    public double getPosition() {
+        return state.position;
     }
 }

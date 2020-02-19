@@ -15,8 +15,8 @@ public class Gripper implements Subsystem {
     }
 
     public enum State {
-        INTAKE(1.0),
-        SPIT_OUT(0);
+        INTAKE(0.0),
+        SPIT_OUT(1.0);
 
         private final double position;
 
@@ -38,6 +38,10 @@ public class Gripper implements Subsystem {
     @Override
     public void periodic() {
         gripper.setPosition(state.position);
+    }
+
+    public double getPosition() {
+        return state.position;
     }
 }
 

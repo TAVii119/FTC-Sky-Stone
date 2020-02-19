@@ -33,19 +33,23 @@ public class Intake implements Subsystem {
         this.state = state;
     }
 
-    public double getPower(){return state.power;}
-
     @Override
     public void initHardware() {
         this.intakeL = hardwareMap.get(DcMotor.class, "intakeL");
         this.intakeR = hardwareMap.get(DcMotor.class, "intakeR");
         this.intakeR.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.intakeR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.intakeL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     @Override
     public void periodic() {
         this.intakeL.setPower(state.power);
         this.intakeR.setPower(state.power);
+    }
+
+    public double getPower() {
+        return state.power;
     }
 }
 
