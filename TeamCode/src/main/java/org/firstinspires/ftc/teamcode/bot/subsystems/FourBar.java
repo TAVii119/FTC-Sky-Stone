@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class FourBar implements Subsystem {
     private HardwareMap hardwareMap;
 
-    private Servo barLeft;
-    private Servo barRight;
+    private Servo servoGbL;
+    private Servo servoGbR;
     private State state = State.INTAKE;
 
     public FourBar(HardwareMap hardwareMap) {
@@ -19,7 +19,7 @@ public class FourBar implements Subsystem {
         WAIT(0.2),
         INTAKE(0.0),
         SCORE1(0.5),
-        SCORE2(1.0);
+        SCORE2(0.74);
 
         private final double position;
 
@@ -35,15 +35,16 @@ public class FourBar implements Subsystem {
 
     @Override
     public void initHardware() {
-        this.barLeft = hardwareMap.get(Servo.class, "barLeft");
-        this.barRight = hardwareMap.get(Servo.class, "barRight");
-        this.barRight.setDirection(Servo.Direction.REVERSE);
+        this.servoGbL = hardwareMap.get(Servo.class, "servoGbL");
+        this.servoGbR = hardwareMap.get(Servo.class, "servoGbR");
+        servoGbL.setDirection(Servo.Direction.REVERSE);
+        servoGbR.setDirection(Servo.Direction.FORWARD);
     }
 
     @Override
     public void periodic() {
-        barLeft.setPosition(state.position);
-        barRight.setPosition(state.position);
+        servoGbL.setPosition(state.position);
+        servoGbR.setPosition(state.position);
     }
 
     public double getPosition() {

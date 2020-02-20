@@ -39,6 +39,11 @@ public class Drive implements Subsystem{
 
         motorRF.setDirection(DcMotor.Direction.REVERSE);
         motorRB.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override

@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Intake implements Subsystem {
     private HardwareMap hardwareMap;
 
-    private DcMotor intakeL;
-    private DcMotor intakeR;
+    private DcMotor motorIntakeL;
+    private DcMotor motorIntakeR;
     private State state = State.STOP;
 
     public Intake(HardwareMap hardwareMap) {
@@ -35,21 +35,20 @@ public class Intake implements Subsystem {
 
     @Override
     public void initHardware() {
-        this.intakeL = hardwareMap.get(DcMotor.class, "intakeL");
-        this.intakeR = hardwareMap.get(DcMotor.class, "intakeR");
-        this.intakeR.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.intakeR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        this.intakeL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.motorIntakeL= hardwareMap.get(DcMotor.class, "motorIntakeL");
+        this.motorIntakeR = hardwareMap.get(DcMotor.class, "motorIntakeR");
+        this.motorIntakeR.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.motorIntakeL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.motorIntakeR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     @Override
     public void periodic() {
-        this.intakeL.setPower(state.power);
-        this.intakeR.setPower(state.power);
+        this.motorIntakeL.setPower(state.power);
+        this.motorIntakeR.setPower(state.power);
     }
 
     public double getPower() {
         return state.power;
     }
 }
-

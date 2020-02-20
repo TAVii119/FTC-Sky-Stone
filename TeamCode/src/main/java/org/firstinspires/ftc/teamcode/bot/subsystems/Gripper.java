@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Gripper implements Subsystem {
     private HardwareMap hardwareMap;
 
-    private Servo gripper;
+    private Servo servoGrip;
     private State state = State.SPIT_OUT;
 
     public Gripper(HardwareMap hardwareMap) {
@@ -15,8 +15,8 @@ public class Gripper implements Subsystem {
     }
 
     public enum State {
-        INTAKE(0.0),
-        SPIT_OUT(1.0);
+        INTAKE(0.75),
+        SPIT_OUT(0.0);
 
         private final double position;
 
@@ -32,16 +32,16 @@ public class Gripper implements Subsystem {
 
     @Override
     public void initHardware() {
-        this.gripper = hardwareMap.get(Servo.class, "gripper");
+        this.servoGrip = hardwareMap.get(Servo.class, "servoGrip");
+        this.servoGrip.setDirection(Servo.Direction.REVERSE);
     }
 
     @Override
     public void periodic() {
-        gripper.setPosition(state.position);
+        servoGrip.setPosition(state.position);
     }
 
     public double getPosition() {
         return state.position;
     }
 }
-

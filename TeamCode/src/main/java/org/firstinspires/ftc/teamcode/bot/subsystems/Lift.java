@@ -46,4 +46,47 @@ public class Lift implements Subsystem {
 
         return liftPosition;
     }
+
+    public void moveToTarget(int target, double power) {
+
+        liftMotorL.setTargetPosition(target);
+        liftMotorR.setTargetPosition(target);
+
+        liftMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        liftMotorL.setPower(power);
+        liftMotorR.setPower(power);
+
+        while ((target - liftMotorL.getCurrentPosition() < target - 25) && (target - liftMotorR.getCurrentPosition() < target -25)) {
+
+        }
+
+        liftMotorL.setPower(0);
+        liftMotorR.setPower(0);
+
+        liftMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void returnLift(double power) {
+        liftMotorL.setTargetPosition(0);
+        liftMotorR.setTargetPosition(0);
+
+        liftMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        liftMotorL.setPower(power);
+        liftMotorR.setPower(power);
+
+        while ((liftMotorL.getCurrentPosition() > 25) && (liftMotorR.getCurrentPosition() > 25)) {
+
+        }
+
+        liftMotorL.setPower(0);
+        liftMotorR.setPower(0);
+
+        liftMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 }

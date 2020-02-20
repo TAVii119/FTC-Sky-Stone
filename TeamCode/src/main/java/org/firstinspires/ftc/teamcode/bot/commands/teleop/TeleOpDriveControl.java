@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.bot.subsystems.Drive;
 public class TeleOpDriveControl implements Command {
     private Drive drive;
     private Gamepad gamepad;
+    double powerLimit = 1;
 
     public TeleOpDriveControl(Drive drive, Gamepad gamepad) {
         this.drive = drive;
@@ -21,11 +22,16 @@ public class TeleOpDriveControl implements Command {
 
     @Override
     public void periodic() {
+         if (gamepad.left_bumper)
+             powerLimit = 1;
+         else if (gamepad.right_bumper)
+             powerLimit = 0.1;
+
         drive.setPower(
-                -gamepad.left_stick_y + gamepad.right_stick_x,
-                -gamepad.left_stick_y - gamepad.right_stick_x,
-                -gamepad.left_stick_y - gamepad.right_stick_x,
-                -gamepad.left_stick_y - gamepad.right_stick_x
+                (-gamepad.left_stick_y + gamepad.right_stick_x + gamepad.left_stick_x + gamepad.right_trigger)*powerLimit,
+                (-gamepad.left_stick_y - gamepad.right_stick_x - gamepad.left_stick_x + gamepad.left_trigger)*powerLimit,
+                (-gamepad.left_stick_y + gamepad.right_stick_x - gamepad.left_stick_x + gamepad.left_trigger)*powerLimit,
+                (-gamepad.left_stick_y - gamepad.right_stick_x + gamepad.left_stick_x + gamepad.right_trigger)*powerLimit
         );
     }
 

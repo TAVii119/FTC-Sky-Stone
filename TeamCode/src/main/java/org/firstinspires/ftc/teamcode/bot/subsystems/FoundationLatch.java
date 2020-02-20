@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class FoundationLatch implements Subsystem {
     private HardwareMap hardwareMap;
 
-    private Servo foundationL;
-    private Servo foundationR;
+    private Servo servoFounL;
+    private Servo servoFounR;
     private State state = State.LATCH;
 
     public FoundationLatch(HardwareMap hardwareMap) {
@@ -16,7 +16,7 @@ public class FoundationLatch implements Subsystem {
     }
 
     public enum State {
-        LATCH(1.0),
+        LATCH(0.67),
         UNLATCH(0.0);
 
         private final double position;
@@ -33,14 +33,16 @@ public class FoundationLatch implements Subsystem {
 
     @Override
     public void initHardware() {
-        this.foundationL = hardwareMap.get(Servo.class, "foundationL");
-        this.foundationR = hardwareMap.get(Servo.class, "foundationR");
+        this.servoFounL = hardwareMap.get(Servo.class, "servoFounL");
+        this.servoFounR = hardwareMap.get(Servo.class, "servoFounR");
+        servoFounL.setDirection(Servo.Direction.REVERSE);
+        servoFounR.setDirection(Servo.Direction.FORWARD);
     }
 
     @Override
     public void periodic() {
-        foundationL.setPosition(state.position);
-        foundationR.setPosition(state.position);
+        servoFounL.setPosition(state.position);
+        servoFounR.setPosition(state.position);
     }
 
     public double getPosition(){return state.position;}
