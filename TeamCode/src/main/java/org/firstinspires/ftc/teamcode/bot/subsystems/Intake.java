@@ -37,7 +37,7 @@ public class Intake implements Subsystem {
     public void initHardware() {
         this.motorIntakeL= hardwareMap.get(DcMotor.class, "motorIntakeL");
         this.motorIntakeR = hardwareMap.get(DcMotor.class, "motorIntakeR");
-        this.motorIntakeR.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.motorIntakeL.setDirection(DcMotorSimple.Direction.REVERSE);
         this.motorIntakeL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         this.motorIntakeR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }

@@ -15,7 +15,7 @@ public class Gripper implements Subsystem {
     }
 
     public enum State {
-        INTAKE(0.75),
+        INTAKE(0.77),
         SPIT_OUT(0.0);
 
         private final double position;

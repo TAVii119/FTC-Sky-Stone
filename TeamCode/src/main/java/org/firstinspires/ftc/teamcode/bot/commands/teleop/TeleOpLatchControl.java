@@ -48,7 +48,7 @@ public class TeleOpLatchControl implements Command {
         if (gamepad.y && latch.getPosition() == 0) {
             latch.setState(FoundationLatch.State.LATCH);
             gamepadRateLimit.reset();
-        } else if (gamepad.y && latch.getPosition() == 1) {
+        } else if (gamepad.y && latch.getPosition() == 0.67) {
             latch.setState(FoundationLatch.State.UNLATCH);
             gamepadRateLimit.reset();
         }

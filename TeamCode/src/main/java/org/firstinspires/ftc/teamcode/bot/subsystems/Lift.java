@@ -2,13 +2,14 @@ package org.firstinspires.ftc.teamcode.bot.subsystems;
 
 import com.disnodeteam.dogecommander.Subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Lift implements Subsystem {
     private HardwareMap hardwareMap;
 
-    private DcMotor liftMotorL;
-    private DcMotor liftMotorR;
+    private DcMotor motorLiftL;
+    private DcMotor motorLiftR;
 
     private double leftPower = 0;
     private double rightPower = 0;
@@ -22,71 +23,70 @@ public class Lift implements Subsystem {
         this.rightPower = rightPower;
     }
 
+    public int returnPosition() {
+        return motorLiftR.getCurrentPosition();
+    }
+
+    public void moveToTarget(int target, double power) {
+        motorLiftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        motorLiftL.setTargetPosition(target);
+        motorLiftR.setTargetPosition(target);
+
+        motorLiftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorLiftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        motorLiftL.setPower(power);
+        motorLiftR.setPower(power);
+
+        while (motorLiftR.isBusy()) {
+            // wait
+        }
+
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+
+        motorLiftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLiftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void returnLift(double power) {
+        motorLiftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        motorLiftR.setTargetPosition(0);
+
+        motorLiftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        motorLiftR.setPower(power);
+
+        while (motorLiftR.isBusy()) {
+
+        }
+
+        motorLiftL.setPower(0);
+        motorLiftR.setPower(0);
+
+        motorLiftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLiftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
     @Override
     public void initHardware() {
-        this.liftMotorL = hardwareMap.get(DcMotor.class, "liftMotorL");
-        this.liftMotorR = hardwareMap.get(DcMotor.class, "liftMotorR");
+        this.motorLiftL = hardwareMap.get(DcMotor.class, "motorLiftL");
+        this.motorLiftR = hardwareMap.get(DcMotor.class, "motorLiftR");
 
-        this.liftMotorR.setDirection(DcMotor.Direction.REVERSE);
+        this.motorLiftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.motorLiftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        this.liftMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.liftMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.liftMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.liftMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.motorLiftL.setDirection(DcMotor.Direction.REVERSE);
+
+        this.motorLiftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.motorLiftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); // BRAKE
     }
 
     @Override
     public void periodic() {
-        liftMotorL.setPower(leftPower);
-        liftMotorR.setPower(rightPower);
-    }
-
-    public int getLiftPosition() {
-        int liftPosition = liftMotorL.getCurrentPosition();
-
-        return liftPosition;
-    }
-
-    public void moveToTarget(int target, double power) {
-
-        liftMotorL.setTargetPosition(target);
-        liftMotorR.setTargetPosition(target);
-
-        liftMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        liftMotorL.setPower(power);
-        liftMotorR.setPower(power);
-
-        while ((target - liftMotorL.getCurrentPosition() < target - 25) && (target - liftMotorR.getCurrentPosition() < target -25)) {
-
-        }
-
-        liftMotorL.setPower(0);
-        liftMotorR.setPower(0);
-
-        liftMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void returnLift(double power) {
-        liftMotorL.setTargetPosition(0);
-        liftMotorR.setTargetPosition(0);
-
-        liftMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        liftMotorL.setPower(power);
-        liftMotorR.setPower(power);
-
-        while ((liftMotorL.getCurrentPosition() > 25) && (liftMotorR.getCurrentPosition() > 25)) {
-
-        }
-
-        liftMotorL.setPower(0);
-        liftMotorR.setPower(0);
-
-        liftMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLiftL.setPower(leftPower);
+        motorLiftR.setPower(rightPower);
     }
 }

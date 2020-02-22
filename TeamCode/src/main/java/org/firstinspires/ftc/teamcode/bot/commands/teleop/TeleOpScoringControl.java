@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.bot.commands.teleop;
 
 import com.disnodeteam.dogecommander.Command;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
@@ -41,10 +42,23 @@ public class TeleOpScoringControl implements Command {
     @Override
     public void periodic() {
         handleGamepad();
-        liftPowerL = -gamepad.left_stick_y * 0.1;
-        liftPowerR = -gamepad.left_stick_y* 0.1;
-        lift.setPower(liftPowerL, liftPowerR);
 
+        if (gamepad.a) {
+            lift.moveToTarget(getTarget(), 1.0);
+            if (level == 1)
+                fourbar.setState(FourBar.State.SCORE2);
+            else fourbar.setState(FourBar.State.SCORE1);
+
+        } else if (gamepad.b) {
+            fourbar.setState(FourBar.State.WAIT);
+            sleep(250);
+            lift.returnLift(1.0);
+
+        }
+
+        liftPowerL = -gamepad.left_stick_y * 0.1;
+        liftPowerR = -gamepad.left_stick_y * 0.1;
+        lift.setPower(liftPowerL, liftPowerR);
     }
 
     @Override
@@ -62,19 +76,6 @@ public class TeleOpScoringControl implements Command {
             return;
         }
 
-        if (gamepad.a) {
-            lift.moveToTarget(getTarget(), 0);
-            if (level == 1)
-                fourbar.setState(FourBar.State.SCORE1);
-            else fourbar.setState(FourBar.State.SCORE2);
-            gamepadRateLimit.reset();
-        } else if (gamepad.b) {
-            fourbar.setState(FourBar.State.WAIT);
-            sleep(250);
-            lift.returnLift(0);
-            gamepadRateLimit.reset();
-        }
-
         if (gamepad.dpad_up && level <= 8) { // INCREASE THE CURRENT LEVEL OF THE SKYSCRAPER
             level++;
             gamepadRateLimit.reset();
@@ -83,26 +84,26 @@ public class TeleOpScoringControl implements Command {
             gamepadRateLimit.reset();
         }
 
-        if (gamepad.x && gripper.getPosition() == 0.75) { // MOVE FROM INTAKE TO SPIT_OUT
+        if (gamepad.x && gripper.getPosition() == 0.77) { // MOVE FROM INTAKE TO SPIT_OUT
             gripper.setState(Gripper.State.SPIT_OUT);
             gamepadRateLimit.reset();
         } else if (gamepad.x && gripper.getPosition() == 0.0) { // MOVE FROM SPIT_OUT TO INTAKE
             fourbar.setState(FourBar.State.INTAKE);
-            sleep(100);
+            sleep(250);
             gripper.setState(Gripper.State.INTAKE);
             gamepadRateLimit.reset();
         }
 
-        if (gamepad.y && fourbar.getPosition() == 0.2) { // MOVE FROM WAIT TO INTAKE
+        if (gamepad.y && fourbar.getPosition() == 0.1) { // MOVE FROM WAIT TO INTAKE
             fourbar.setState(FourBar.State.INTAKE);
             gamepadRateLimit.reset();
         } else if (gamepad.y && fourbar.getPosition() == 0.0) { // MOVE FROM INTAKE TO SCORE1
             fourbar.setState(FourBar.State.SCORE1);
             gamepadRateLimit.reset();
-        } else if (gamepad.y && fourbar.getPosition() == 0.5) { // MOVE FROM SCORE1 TO SCORE2
+        } else if (gamepad.y && fourbar.getPosition() == 0.55) { // MOVE FROM SCORE1 TO SCORE2
             fourbar.setState(FourBar.State.SCORE2);
             gamepadRateLimit.reset();
-        } else if (gamepad.y && fourbar.getPosition() == 0.75) { // MOVE FROM SCORE 2 BACK TO WAIT
+        } else if (gamepad.y && fourbar.getPosition() == 0.72) { // MOVE FROM SCORE 2 BACK TO WAIT
             fourbar.setState(FourBar.State.WAIT);
             gamepadRateLimit.reset();
         } else if (gamepad.dpad_left) {
@@ -115,28 +116,25 @@ public class TeleOpScoringControl implements Command {
     }
 
     public int getTarget() {
-        int target = 0;
 
         if (level == 1) {
-            target = 0;
+            return 0;
         } else if (level == 2) {
-            target = 200;
+            return 0;
         } else if (level == 3) {
-            target = 300;
+            return 360;
         } else if (level == 4) {
-            target = 400;
+            return 630;
         } else if (level == 5) {
-            target = 500;
+            return 860;
         } else if (level == 6) {
-            target = 600;
+            return 1250;
         } else if (level == 7) {
-            target = 700;
+            return 1530;
         } else if (level == 8) {
-            target = 800;
+            return 1790;
         } else if (level == 9) {
-            target = 900;
-        }
-
-        return target;
+            return 2140;
+        } else return 0;
     }
 }

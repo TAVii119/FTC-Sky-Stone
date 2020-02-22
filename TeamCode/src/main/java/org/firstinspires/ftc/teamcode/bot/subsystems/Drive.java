@@ -32,10 +32,10 @@ public class Drive implements Subsystem{
 
     @Override
     public void initHardware() {
-        motorLF = hardwareMap.get(DcMotor.class, "LF");
-        motorRF = hardwareMap.get(DcMotor.class, "RF");
-        motorLB = hardwareMap.get(DcMotor.class, "LB");
-        motorRB = hardwareMap.get(DcMotor.class, "RB");
+        motorLF = hardwareMap.get(DcMotor.class, "motorLF");
+        motorRF = hardwareMap.get(DcMotor.class, "motorRF");
+        motorLB = hardwareMap.get(DcMotor.class, "motorLB");
+        motorRB = hardwareMap.get(DcMotor.class, "motorRB");
 
         motorRF.setDirection(DcMotor.Direction.REVERSE);
         motorRB.setDirection(DcMotorSimple.Direction.REVERSE);

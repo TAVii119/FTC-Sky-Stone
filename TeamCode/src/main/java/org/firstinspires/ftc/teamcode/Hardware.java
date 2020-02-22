@@ -55,14 +55,14 @@ public class Hardware
         motorIntakeR = robotMap.get(DcMotor.class, "motorIntakeR");
 
         // SET MOTOR DIRECTION
-        motorLF.setDirection(DcMotor.Direction.REVERSE);
-        motorRF.setDirection(DcMotor.Direction.FORWARD);
-        motorLB.setDirection(DcMotor.Direction.REVERSE);
-        motorRB.setDirection(DcMotor.Direction.FORWARD);
+        motorLF.setDirection(DcMotor.Direction.FORWARD);
+        motorRF.setDirection(DcMotor.Direction.REVERSE);
+        motorLB.setDirection(DcMotor.Direction.FORWARD);
+        motorRB.setDirection(DcMotor.Direction.REVERSE);
         motorLiftL.setDirection(DcMotor.Direction.REVERSE);
-        motorLiftR.setDirection(DcMotor.Direction.REVERSE);
-        motorIntakeL.setDirection(DcMotor.Direction.FORWARD);
-        motorIntakeR.setDirection(DcMotor.Direction.REVERSE);
+        motorLiftR.setDirection(DcMotor.Direction.FORWARD);
+        motorIntakeL.setDirection(DcMotor.Direction.REVERSE);
+        motorIntakeR.setDirection(DcMotor.Direction.FORWARD);
 
         // SET MOTOR POWER
         motorLF.setPower(0);

@@ -9,15 +9,15 @@ public class FoundationLatch implements Subsystem {
 
     private Servo servoFounL;
     private Servo servoFounR;
-    private State state = State.LATCH;
+    private State state = State.UNLATCH;
 
     public FoundationLatch(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
     }
 
     public enum State {
-        LATCH(0.67),
-        UNLATCH(0.0);
+        UNLATCH(0.0),
+        LATCH(0.67);
 
         private final double position;
 

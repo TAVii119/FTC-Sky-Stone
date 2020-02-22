@@ -25,7 +25,7 @@ public class TeleOpDriveControl implements Command {
          if (gamepad.left_bumper)
              powerLimit = 1;
          else if (gamepad.right_bumper)
-             powerLimit = 0.1;
+             powerLimit = 0.2;
 
         drive.setPower(
                 (-gamepad.left_stick_y + gamepad.right_stick_x + gamepad.left_stick_x + gamepad.right_trigger)*powerLimit,

@@ -4,6 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.bot.subsystems.FourBar;
+import org.firstinspires.ftc.teamcode.bot.subsystems.Gripper;
+
+import static android.os.SystemClock.sleep;
+
 
 @TeleOp(name="Setup", group="SETUP")
 
@@ -18,7 +23,6 @@ public class Setup extends LinearOpMode {
     @Override
     public void runOpMode() {
         map.init(hardwareMap); // Initialize hardware map
-        resetEncoders();
 
         // Wait for the game to start
         waitForStart();
@@ -42,9 +46,7 @@ public class Setup extends LinearOpMode {
             map.motorRB.setPower(RB);
 
             map.motorLiftL.setPower(-gamepad2.left_stick_y * 0.1);
-            map.motorLiftR.setPower(gamepad2.left_stick_y * 0.1);
-            map.servoFounL.setPosition(-gamepad2.right_stick_x);
-            map.servoFounR.setPosition(-gamepad2.right_stick_x);
+            map.motorLiftR.setPower(-gamepad2.left_stick_y * 0.1);
 
             if (gamepad1.a) {
                 map.motorIntakeL.setPower(1.0);
@@ -87,7 +89,7 @@ public class Setup extends LinearOpMode {
         map.motorLiftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         map.motorLiftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         map.motorIntakeL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        map.motorIntakeR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        map.motorIntakeR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         map.motorLiftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         map.motorLiftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

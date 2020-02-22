@@ -9,17 +9,17 @@ public class FourBar implements Subsystem {
 
     private Servo servoGbL;
     private Servo servoGbR;
-    private State state = State.INTAKE;
+    private State state = State.WAIT;
 
     public FourBar(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
     }
 
     public enum State {
-        WAIT(0.2),
+        WAIT(0.1),
         INTAKE(0.0),
-        SCORE1(0.5),
-        SCORE2(0.74);
+        SCORE1(0.55),
+        SCORE2(0.72);
 
         private final double position;
 
